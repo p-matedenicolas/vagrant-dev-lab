@@ -1,0 +1,19 @@
+
+ssh_username: vagrant
+ssh_password: vagrant
+
+machines:
+  bento-debian-server:
+    number      : 1
+    cpu         : 2
+    mem         : 1024
+    box         : bento/debian-11
+    ip_base     : 192.168.1.
+    ip_start    : 110
+  bento-debian-agent:
+    number      : 0
+    cpu         : 2
+    mem         : 512
+    box         : bento/debian-11
+    ip_base     : 192.168.1.
+    ip_start    : 120

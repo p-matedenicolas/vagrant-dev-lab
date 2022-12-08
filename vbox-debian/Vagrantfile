@@ -1,0 +1,42 @@
+
+# Import configuration
+require 'yaml'
+
+# Load config.yaml file
+vagrantConfig = YAML.load_file('config.yaml')
+machines      = vagrantConfig['machines']
+
+Vagrant.configure("2") do |config|
+
+  # set ssh credentials
+  config.ssh.username = "#{vagrantConfig['ssh_username']}"
+  config.ssh.password = "#{vagrantConfig['ssh_password']}"
+
+  # loop machines
+  machines.each do |type, typeConfig|
+
+    # loop type of machines
+    (1..typeConfig['number']).each do |i|
+
+      machineName = "#{type}-#{i}"
+      machineIp = "#{typeConfig['ip_base']}#{i + typeConfig['ip_start'] - 1}"
+
+      # configure machine
+      config.vm.define "#{machineName}" do |machine|
+
+        machine.vm.box           = typeConfig['box']
+        if typeConfig.has_key? 'box_version'
+          machine.vm.box_version = typeConfig['box_version']
+        end
+        machine.vm.hostname      = "#{machineName}"
+        machine.vm.network "public_network", ip: "#{machineIp}"
+        machine.vm.provider "virtualbox" do |vb|
+          vb.memory = "#{typeConfig['mem']}"
+          vb.cpus   = "#{typeConfig['cpu']}"
+          vb.name   = "#{machineName}"
+          vb.gui    = true
+        end
+      end
+    end
+  end
+end
