@@ -1,6 +1,4 @@
-**/ssh/id_*
-**/ssh/*_id_*
-**/ssh/known_hosts
+**/ssh/
 **/config.yaml
 
 # Created by https://www.toptal.com/developers/gitignore/api/ssh,vagrant
