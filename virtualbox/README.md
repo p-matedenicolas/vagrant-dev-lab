@@ -1,17 +1,16 @@
-# Virtualbox debian dev lab
+# Virtualbox dev lab
 
 Vagrantfile used to deploy multiple virtual machines in virtualbox to use as home lab
 
 ## Setup
 
-There is an [example config file](config.yaml.example) you can rename to ```config.yaml``` and adapt to the needs
+There is an [example config file](config.yaml.example) you can rename to ```config.yaml``` and adapt to your needs
 
 The following variables can be configured
 
-- ssh_username
-    - SSH username to connect to the machine during the initial configuration
-- ssh_password
-    - SSH password to connect to the machine during the initial configuration
+- user: name of the user to create in the box
+- sshKeyHostPath: path to the ssh key to copy from the host
+- sshKeyBoxPath: path to the ssh key to copy inside the box
 - machines
     - The type and number of machines to be deployed
     - variables:
@@ -25,22 +24,23 @@ The following variables can be configured
 ### Example
 ```YAML
 
-ssh_username: vagrant
-ssh_password: vagrant
+user: "paulo"
+sshKeyHostPath: "../ssh/id_rsa.pub"
+sshKeyBoxPath: "/home/vagrant/.ssh/paulo.pub"
 
 machines:
   bento-debian-server:
     number      : 1
     cpu         : 2
     mem         : 1024
-    box         : bento/debian-11
+    box         : bento/debian-12
     ip_base     : 192.168.1.
     ip_start    : 110
   bento-debian-agent:
-    number      : 1
+    number      : 0
     cpu         : 2
     mem         : 512
-    box         : bento/debian-11
+    box         : bento/debian-12
     ip_base     : 192.168.1.
     ip_start    : 120
 ```

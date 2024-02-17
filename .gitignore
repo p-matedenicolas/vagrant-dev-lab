@@ -1,12 +1,24 @@
+**/ssh/id_*
+**/ssh/*_id_*
+**/ssh/known_hosts
+**/config.yaml
+
+# Created by https://www.toptal.com/developers/gitignore/api/ssh,vagrant
+# Edit at https://www.toptal.com/developers/gitignore?templates=ssh,vagrant
+
+### SSH ###
+**/.ssh/id_*
+**/.ssh/*_id_*
+**/.ssh/known_hosts
+
 ### Vagrant ###
 # General
 .vagrant/
 
-# Log files
-*.log
-
-# config files
-config.yaml
+# Log files (if you are creating logs in debug mode, uncomment this)
+# *.log
 
 ### Vagrant Patch ###
 *.box
+
+# End of https://www.toptal.com/developers/gitignore/api/ssh,vagrant

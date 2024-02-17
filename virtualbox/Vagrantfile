@@ -4,14 +4,12 @@ require 'yaml'
 
 # Load config.yaml file
 vagrantConfig = YAML.load_file('config.yaml')
-machines      = vagrantConfig['machines']
+machines = vagrantConfig['machines']
+user = vagrantConfig['user']
+sshKeyHostPath = vagrantConfig['sshKeyHostPath']
+sshKeyBoxPath = vagrantConfig['sshKeyBoxPath']
 
 Vagrant.configure("2") do |config|
-
-  # set ssh credentials
-  config.ssh.username = "#{vagrantConfig['ssh_username']}"
-  config.ssh.password = "#{vagrantConfig['ssh_password']}"
-
   # loop machines
   machines.each do |type, typeConfig|
 
@@ -36,6 +34,8 @@ Vagrant.configure("2") do |config|
           vb.name   = "#{machineName}"
           vb.gui    = true
         end
+        config.vm.provision "file", source: sshKeyHostPath, destination: sshKeyBoxPath
+        machine.vm.provision :shell, :path => "../scripts/setup.sh", :args => [user, sshKeyBoxPath]
       end
     end
   end
